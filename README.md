@@ -11,7 +11,7 @@ Tampilan dari alur yang dijalankan dengan akun uji dan model lokal.
 
 ## Pasang dan masuk
 
-1. Unduh **MYRA-0.1.0-arm64.apk** di [GitHub Releases](https://github.com/Vhirazhr/myra_mobile/releases). Buka file di ponsel Android 7.0 atau lebih baru dengan prosesor ARM64. Izinkan pemasangan dari aplikasi yang membuka APK jika Android memintanya.
+1. Unduh [MYRA-0.1.0-arm64.apk](https://raw.githubusercontent.com/Vhirazhr/myra_mobile/v0.1.0-preview.1/downloads/MYRA-0.1.0-arm64.apk). Buka file di ponsel Android 7.0 atau lebih baru dengan prosesor ARM64. Izinkan pemasangan dari aplikasi yang membuka APK jika Android memintanya.
 2. Saat pertama dibuka, masukkan **publishable key** proyek `myra` dari Supabase Dashboard → **Connect** atau **Settings → API Keys**. Alamat proyek sudah terisi di aplikasi.
 3. Masuk dengan email dan kata sandi akun yang sudah memiliki akses ke studio web MYRA. Konfirmasi usia pada penggunaan pertama. Ketuk ikon pensil pada tab **Chat** untuk memilih atau membuat karakter.
 4. Untuk memperbarui APK di atas instalasi lama, gunakan build dengan application ID dan sertifikat yang sama serta version code yang lebih tinggi. Prarilis ini menggunakan sertifikat pengujian. Simpan keystore milik proyek untuk distribusi produksi.
