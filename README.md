@@ -2,6 +2,13 @@
 
 Messenger Android MYRA, dibuat dengan Flutter dan Dart. Logo, baby pink, dan latar hitam mengikuti studio web. Akun, karakter, grup, universe, pesan, media, dan memori dibaca dari proyek Supabase yang sama. Dashboard dan skema backend dikelola di [myra_web](https://github.com/Vhirazhr/myra_web).
 
+<p>
+  <img src="docs/previews/inbox.png" width="235" alt="Daftar chat MYRA dengan filter personal dan grup">
+  <img src="docs/previews/chat.png" width="235" alt="Chat MYRA dengan balasan AI dan status pesan">
+</p>
+
+Tampilan dari alur yang dijalankan dengan akun uji dan model lokal.
+
 ## Pasang dan masuk
 
 1. Unduh **MYRA-0.1.0-arm64.apk** di [GitHub Releases](https://github.com/Vhirazhr/myra_mobile/releases). Buka file di ponsel Android 7.0 atau lebih baru dengan prosesor ARM64. Izinkan pemasangan dari aplikasi yang membuka APK jika Android memintanya.
@@ -36,10 +43,10 @@ Gunakan Flutter 3.35.7, Dart 3.9.2, JDK 17, Android SDK 36, Build Tools 35, NDK 
 flutter pub get
 flutter analyze
 flutter test
-flutter build apk --release --target-platform android-arm64 --dart-define-from-file=config.local.json
+flutter build apk --release --split-per-abi --target-platform android-arm64 --dart-define-from-file=config.local.json
 ```
 
-APK berada di `build/app/outputs/flutter-apk/app-release.apk`. Untuk memasukkan key melalui layar pertama, hilangkan opsi `--dart-define-from-file`. Untuk menandatangani dengan keystore distribusi, sediakan `android/key.properties` dengan `storeFile` (absolut atau relatif ke `android/app`), `storePassword`, `keyAlias`, dan `keyPassword`.
+APK berada di `build/app/outputs/flutter-apk/app-arm64-v8a-release.apk`. Untuk memasukkan key melalui layar pertama, hilangkan opsi `--dart-define-from-file`. Untuk menandatangani dengan keystore distribusi, sediakan `android/key.properties` dengan `storeFile` (absolut atau relatif ke `android/app`), `storePassword`, `keyAlias`, dan `keyPassword`.
 
 ## Pengujian
 
@@ -49,4 +56,4 @@ Tes widget mencakup setup awal, validasi key, tampilan balasan, reaksi, dan teka
 flutter test --concurrency=1 --reporter=expanded
 ```
 
-Fixture memeriksa persistensi karakter dan grup, percakapan universe, pagination pesan, reaksi, preferensi chat lintas sesi, unggahan privat, audiens status, dan penolakan akses akun lain. Untuk menguji generasi serta pemanggilan memori, isi `MYRA_TEST_MODEL` dengan model yang dilayani adapter OpenAI di lingkungan tes. Runner pengembangan menggunakan Edge Function asli dan transport uji yang mengarahkan permintaan model ke llama.cpp pada loopback. Pemeriksaan perangkat untuk audio, pengiriman FCM, password recovery lewat email, dan akun cloud pemilik masih diperlukan.
+Fixture memeriksa persistensi karakter dan grup, percakapan universe, pagination pesan, reaksi, preferensi chat lintas sesi, unggahan privat, audiens status, dan penolakan akses akun lain. Untuk menguji generasi serta pemanggilan memori, isi `MYRA_TEST_MODEL` dengan model yang dilayani adapter OpenAI di lingkungan tes. Setel `MYRA_TEST_REALTIME=1` untuk memastikan perubahan sesi kedua tiba melalui WebSocket. Tes antarmuka juga mengisi email dan kata sandi, memilih karakter, mengetuk Kirim, dan mencocokkan balasan yang terlihat dengan pesan tersimpan. Runner pengembangan menggunakan Edge Function asli dan transport uji yang mengarahkan permintaan model ke llama.cpp pada loopback. Pemeriksaan perangkat untuk audio, pengiriman FCM, password recovery lewat email, dan akun cloud pemilik masih diperlukan.

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
@@ -247,6 +248,29 @@ void main() {
           )).where((m) => m['id'] == reply['id']).single['reply_to'],
           sent['id'],
         );
+        if (env['MYRA_TEST_REALTIME'] == '1') {
+          final feed = ChangeFeed(api);
+          final events = StreamController<void>.broadcast();
+          feed.addListener(() => events.add(null));
+          try {
+            await events.stream.first.timeout(const Duration(seconds: 30));
+            final next = events.stream.first.timeout(
+              const Duration(seconds: 20),
+            );
+            await second
+                .from('characters')
+                .update({'communication': 'Suara hangat'})
+                .eq('id', ch['id']);
+            await next;
+            expect(
+              (await api.list('characters')).single['communication'],
+              'Suara hangat',
+            );
+          } finally {
+            feed.dispose();
+            await events.close();
+          }
+        }
         final refreshed = await second.auth.refreshSession();
         expect(refreshed.user?.id, owner);
       } finally {

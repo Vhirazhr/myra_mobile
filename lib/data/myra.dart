@@ -375,9 +375,16 @@ class ChangeFeed extends ChangeNotifier {
           schema: 'public',
           callback: (_) => refresh(),
         )
-        .subscribe((status, _) {
-          if (status == RealtimeSubscribeStatus.subscribed) refresh();
-        });
+        .onSystemEvents((event) {
+          // The websocket joins before the database subscription is ready.
+          // Refresh at the replication acknowledgement to include changes in that gap.
+          if (event is Map &&
+              event['extension'] == 'postgres_changes' &&
+              event['status'] == 'ok') {
+            refresh();
+          }
+        })
+        .subscribe();
   }
   final Myra api;
   late final RealtimeChannel channel;
